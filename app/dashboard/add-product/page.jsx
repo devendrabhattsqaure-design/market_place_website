@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Package, Image as ImageIcon, AlertCircle } from 'lucide-react'
 import { getCurrentUser, isBusinessUser } from '@/lib/auth'
-import type { User } from '@/lib/mockData'
+import  { User } from '@/lib/mockData'
 
 export default function AddProductPage() {
   const router = useRouter()
@@ -30,7 +30,7 @@ export default function AddProductPage() {
     setUser(currentUser)
   }, [router])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -38,7 +38,7 @@ export default function AddProductPage() {
     setError('')
   }
 
-  const handleImageUrlChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUrlChange = async (e) => {
     const url = e.target.value
     setFormData({ ...formData, image: url })
 
@@ -63,7 +63,7 @@ export default function AddProductPage() {
     }
   }
 
-  const validateForm = (): boolean => {
+  const validateForm = () => {
     if (!formData.name || !formData.price || !formData.description || !formData.image) {
       setError('Please fill in all fields')
       return false
@@ -75,7 +75,7 @@ export default function AddProductPage() {
     return true
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!validateForm()) return

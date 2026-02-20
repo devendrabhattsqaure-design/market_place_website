@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Plus, Edit2, Trash2, ShoppingBag, DollarSign, TrendingUp, Award } from 'lucide-react'
 import { getCurrentUser, isBusinessUser } from '@/lib/auth'
 import { mockBusinesses } from '@/lib/mockData'
-import type { User } from '@/lib/mockData'
+import  { User } from '@/lib/mockData'
 import SuccessAnimation from '@/components/ui/SuccessAnimation'
 
 export default function DashboardPage() {
@@ -41,7 +41,7 @@ export default function DashboardPage() {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>
   }
 
-  const handleDeleteProduct = (productId: string) => {
+  const handleDeleteProduct = (productId) => {
     if (confirm('Are you sure you want to delete this product?')) {
       setSuccessMessage('Product deleted successfully!')
       setShowSuccess(true)
@@ -114,7 +114,7 @@ export default function DashboardPage() {
                 <span className="text-2xl font-bold text-primary">
                   $
                   {(
-                    business.products.reduce((sum: number, p: any) => sum + p.price * 5, 0) * (business.totalSales / business.products.length)
+                    business.products.reduce((sum, p) => sum + p.price * 5, 0) * (business.totalSales / business.products.length)
                   ).toFixed(0)}
                 </span>
               </div>
@@ -139,7 +139,7 @@ export default function DashboardPage() {
           {/* Products Grid */}
           {business.products.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
-              {business.products.map((product: any) => (
+              {business.products.map((product) => (
                 <div key={product.id} className="card-hover border border-border rounded-lg p-4">
                   {/* Product Image */}
                   <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-lg mb-3" />
