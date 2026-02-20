@@ -7,7 +7,7 @@ import { generateWhatsAppLink, openWhatsAppChat } from '@/lib/whatsappUtils'
 import SuccessAnimation from '@/components/ui/SuccessAnimation'
 
 export default function CartPage() {
-  const [cart] = useState<any[]>([
+  const [cart, setCart] = useState([
     {
       productId: '1-1',
       businessId: '1',
@@ -40,14 +40,14 @@ export default function CartPage() {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     setBuyerInfo({
       ...buyerInfo,
       [e.target.name]: e.target.value,
     })
   }
 
-  const handleCheckout = (businessId: string) => {
+  const handleCheckout = (businessId) => {
     if (!buyerInfo.name || !buyerInfo.phone) {
       alert('Please fill in your name and phone number')
       return
@@ -74,6 +74,13 @@ export default function CartPage() {
     }, 500)
   }
 
+  const handleRemoveItem = (businessId, productId) => {
+    setCart(cart.filter(item => !(item.businessId === businessId && item.productId === productId)))
+    setSuccessMessage('Item removed from cart')
+    setShowSuccess(true)
+    setTimeout(() => setShowSuccess(false), 2000)
+  }
+
   // Group by business
   const cartByBusiness = cart.reduce((acc, item) => {
     if (!acc[item.businessId]) {
@@ -81,7 +88,7 @@ export default function CartPage() {
     }
     acc[item.businessId].push(item)
     return acc
-  }, {} as Record<string, any[]>)
+  }, {})
 
   if (cart.length === 0) {
     return (
@@ -141,7 +148,10 @@ export default function CartPage() {
                         <p className="font-bold text-primary">${(item.price * item.quantity).toFixed(2)}</p>
                         <p className="text-xs text-muted-foreground">${item.price.toFixed(2)} each</p>
                       </div>
-                      <button className="text-accent hover:bg-accent/10 p-2 rounded-lg transition-colors">
+                      <button 
+                        onClick={() => handleRemoveItem(item.businessId, item.productId)}
+                        className="text-accent hover:bg-accent/10 p-2 rounded-lg transition-colors"
+                      >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
@@ -208,7 +218,7 @@ export default function CartPage() {
                 <p className="text-xs text-foreground font-semibold mb-2">How to Complete Your Order:</p>
                 <ol className="text-xs text-muted-foreground space-y-1">
                   <li>1. Enter your details above</li>
-                  <li>2. Click "Complete Order" for each seller</li>
+                  <li>2. Click &quot;Complete Order&quot; for each seller</li>
                   <li>3. Chat directly via WhatsApp to confirm</li>
                   <li>4. Arrange payment & delivery</li>
                 </ol>
