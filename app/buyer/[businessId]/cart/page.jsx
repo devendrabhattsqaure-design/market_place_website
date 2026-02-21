@@ -11,7 +11,7 @@ import { FeedbackModal } from '@/components/ui/FeedbackModal'
 export default function BusinessCartPage() {
   const params = useParams()
   const router = useRouter()
-  const businessId = params.businessId as string
+  const businessId = params.businessId
   const { getBusinessCart, removeFromCart, updateQuantity, clearBusinessCart } = useCart()
   const cart = getBusinessCart(businessId)
   const [showSparkle, setShowSparkle] = useState(false)
@@ -47,18 +47,18 @@ export default function BusinessCartPage() {
 
   const total = cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-  const handleRemoveItem = (productId: string) => {
+  const handleRemoveItem = (productId) => {
     removeFromCart(businessId, productId)
   }
 
-  const handleQuantityChange = (productId: string, quantity: number) => {
+  const handleQuantityChange = (productId, quantity) => {
     if (quantity > 0) {
       updateQuantity(businessId, productId, quantity)
     }
   }
 
-  const handleCheckout = (e: React.MouseEvent) => {
-    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+  const handleCheckout = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
     const x = rect.left + rect.width / 2
     const y = rect.top + rect.height / 2
 

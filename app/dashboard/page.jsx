@@ -6,13 +6,12 @@ import Link from 'next/link'
 import { Plus, Edit2, Trash2, ShoppingBag, DollarSign, TrendingUp, Award } from 'lucide-react'
 import { getCurrentUser, isBusinessUser } from '@/lib/auth'
 import { mockBusinesses } from '@/lib/mockData'
-import  { User } from '@/lib/mockData'
 import SuccessAnimation from '@/components/ui/SuccessAnimation'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
-  const [business, setBusiness] = useState<any>(null)
+  const [user, setUser] = useState(null)
+  const [business, setBusiness] = useState(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
 
@@ -142,7 +141,11 @@ export default function DashboardPage() {
               {business.products.map((product) => (
                 <div key={product.id} className="card-hover border border-border rounded-lg p-4">
                   {/* Product Image */}
-                  <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-lg mb-3" />
+                  <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    className="w-full h-40 object-cover rounded-lg mb-3" 
+                  />
 
                   {/* Product Info */}
                   <h3 className="font-semibold text-foreground mb-2 line-clamp-2">{product.name}</h3>

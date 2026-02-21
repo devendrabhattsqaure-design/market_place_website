@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Package, Image as ImageIcon, AlertCircle } from 'lucide-react'
 import { getCurrentUser, isBusinessUser } from '@/lib/auth'
-import  { User } from '@/lib/mockData'
+import  User from '@/lib/mockData'
 
 export default function AddProductPage() {
   const router = useRouter()
